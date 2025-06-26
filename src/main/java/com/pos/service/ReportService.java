@@ -164,7 +164,7 @@ public class ReportService {
 
             return productData;
         })
-        .sorted(Comparator.comparingInt(p -> (Integer) p.get("totalSold")))
+        .sorted(Comparator.comparingInt((Map<String, Object> p) -> ((Number) p.get("totalSold")).intValue()).reversed())
         .toList();
 
         report.put("products", productReports);
