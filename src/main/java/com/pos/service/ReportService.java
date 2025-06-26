@@ -25,6 +25,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,7 +163,9 @@ public class ReportService {
             productData.put("totalProfit", totalProfit);
 
             return productData;
-        }).toList();
+        })
+        .sorted(Comparator.comparingInt(p -> (Integer) p.get("totalSold")))
+        .toList();
 
         report.put("products", productReports);
         report.put("totalProducts", products.size());
