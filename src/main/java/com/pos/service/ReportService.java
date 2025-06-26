@@ -180,18 +180,15 @@ public class ReportService {
 
         Map<String, Object> stats = new HashMap<>();
 
-        // Product stats
         Long totalProducts = productRepository.countActiveProductsByUser(currentUser);
         stats.put("totalProducts", totalProducts);
 
-        // Sales stats
         Long totalSales = saleRepository.countCompletedSalesByUser(currentUser);
         stats.put("totalSales", totalSales);
 
         BigDecimal totalRevenue = saleRepository.sumTotalAmountByUser(currentUser);
         stats.put("totalRevenue", totalRevenue != null ? totalRevenue : BigDecimal.ZERO);
 
-        // Today's stats
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
@@ -214,7 +211,7 @@ public class ReportService {
 
         List<Product> lowStockProducts = productRepository.findLowStockProducts(currentUser, 10);
         stats.put("lowStockProducts", lowStockProducts.size());
-
+        stats.put("lowStockList", lowStockProducts);
         return stats;
     }
 
